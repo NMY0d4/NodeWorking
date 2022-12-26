@@ -1,5 +1,8 @@
 const http = require("http");
 
+// copy/paste next line in the console of the webpage where server running for POSTing data
+// fetch('http://localhost:3000/friends',{method:'POST', body:JSON.stringify({id:3, name:'Ryan Dahl'})});
+
 const PORT = 3000;
 
 const friends = [
@@ -19,7 +22,13 @@ const friends = [
 
 const server = http.createServer((req, res) => {
     const items = req.url.split("/");
-    if (items[1] === "friends") {
+    if (req.method === "POST" && items[1] === "friends") {
+        req.on("data", (data) => {
+            const friend = data.toString();
+            console.log("Request:", friend);
+            friends.push(JSON.parse(friend));
+        });
+    } else if (req.method === "GET" && items[1] === "friends") {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
         if (items.length === 3) {
@@ -27,7 +36,7 @@ const server = http.createServer((req, res) => {
         } else {
             res.end(JSON.stringify(friends));
         }
-    } else if (items[1] === "messages") {
+    } else if (req.method === "GET" && items[1] === "messages") {
         res.setHeader("Content-Type", "text/html");
         res.write(
             "<html><body><ul><li>What are your thoughts on astronomy?</li><li>Hello Isaac</li></ul></body></html>"
