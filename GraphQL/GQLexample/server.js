@@ -15,6 +15,7 @@ const schema = makeExecutableSchema({
 
 const root = {
     products: require("./products/products.model"),
+    orders: require("./orders/orders.model"),
 };
 
 const app = express();
