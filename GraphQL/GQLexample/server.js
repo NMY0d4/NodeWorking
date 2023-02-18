@@ -11,6 +11,18 @@ const typesArray = loadFilesSync("**/*", {
 
 const schema = makeExecutableSchema({
     typeDefs: typesArray,
+    resolvers: {
+        Query: {
+            products: async (parent) => {
+                console.log("Getting the products...");
+                return await Promise.resolve(parent.products);
+            },
+            orders: async (parent) => {
+                console.log("Getting the orders...");
+                return await Promise.resolve(parent.orders);
+            },
+        },
+    },
 });
 
 const root = {
