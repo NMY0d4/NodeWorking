@@ -13,4 +13,21 @@ module.exports = {
             return await productsModel.getProductById(args.id);
         },
     },
+
+    Mutation: {
+        addNewProduct: async (_, args) => {
+            return await productsModel.addNewProduct(
+                args.id,
+                args.description,
+                args.price
+            );
+        },
+        addNewProductReview: async (_, args) => {
+            return await productsModel.addNewProductReview(
+                args.id,
+                args.rating,
+                args.comment
+            );
+        },
+    },
 };
