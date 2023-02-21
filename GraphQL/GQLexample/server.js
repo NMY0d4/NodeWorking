@@ -13,8 +13,6 @@ const resolversArray = loadFilesSync("**/*", {
     extensions: ["resolvers.js"],
 });
 
-console.log(resolversArray);
-
 const schema = makeExecutableSchema({
     typeDefs: typesArray,
     resolvers: resolversArray,
